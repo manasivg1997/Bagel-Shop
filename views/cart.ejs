@@ -1,0 +1,324 @@
+<%- include ('partials/header') %>
+    <div class="container-fluid" style="overflow-y: auto;">
+        <div class="row">
+            <%- include ('partials/leftmenu') %>
+                <div class="col-md-1"></div>
+
+                <% var isEmpty=itemsCount===0 ? "hidden" :"" %>
+                    <div class="col-md-7  mt-4 <%= isEmpty ? 'text-center':''%>">
+                        <div style="display: inline-flex;"> <i <%=isEmpty %> class="fas fa-shopping-cart"
+                                style="margin-top:3%;font-size: 22px;"></i>
+                            <% var hasData=itemsCount !==0 ? "hidden" :"" %>
+                                <h3 class="ml-2" <%=isEmpty %>>Your Cart (<%= itemsCount %> items)</h3>
+                                <h3 class="ml-2" <%=hasData %>>Items not available in the Cart</h3>
+                        </div>
+                        <div class="d-inline">
+                            <button <%=isEmpty %> class="btn btn-primary float-right" type="submit"
+                                id="orderButton">Order</button>
+                        </div>
+                        <div class="mt-2" id="cartTable" style="overflow-y: auto;height: 450px;" <%=isEmpty %>>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Item</th>
+                                        <th scope="col" style="text-align: center;">Quantity</th>
+                                        <th scope="col" style="text-align: center;">Price</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% cartValues.forEach(function(item, index){ %>
+                                        <tr>
+                                            <td scope="row">
+                                                <%= index + 1%>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <div class="mb-2" id="prodName_<%=item.cartId%>">
+                                                        <%=item.productName%>
+                                                    </div>
+                                                    <% item.customizations.forEach(function(cust){ %>
+                                                        <div class="ml-4 mb-2" id="prodName_<%=cust.cartId%>">
+                                                            - <%= cust.productName %>
+                                                        </div>
+                                                        <% }) %>
+                                                </div>
+                                            </td>
+                                            <td style="text-align: center;">
+
+                                                <div>
+                                                    <div class="mb-2">
+                                                        <i class="fa fa-minus" id="<%=item.cartId%>"></i>
+                                                        <input type="number" name="quantity_<%=item.cartId%>" min="1"
+                                                            value="<%=item.quantity%>"
+                                                            style="width: 40px;padding-left: 12px; height: 24px;"
+                                                            id="qtyCtrl" />
+                                                        <i class="fa fa-plus" id="<%=item.cartId%>"></i>
+                                                    </div>
+                                                    <% item.customizations.forEach(function(cust, index){ %>
+                                                        <div class="mb-2">
+                                                            <i class="fa fa-minus" id="<%=cust.cartId%>"></i>
+                                                            <input type="number" name="quantity_<%=cust.cartId%>"
+                                                                min="1" value="<%= cust.quantity %>"
+                                                                style="width: 40px;padding-left: 12px; height: 24px;"
+                                                                id="qtyCtrl" />
+                                                            <i class="fa fa-plus" id="<%=cust.cartId%>"></i>
+                                                        </div>
+                                                        <% }) %>
+                                                </div>
+                                            </td>
+                                            <td style="text-align: center;">
+
+                                                <div>
+                                                    <div class="mb-2">
+                                                        $ <%=item.price%>
+                                                    </div>
+                                                    <% item.customizations.forEach(function(cust){ %>
+                                                        <div class="mb-2">
+                                                            $ <%= cust.price %>
+                                                        </div>
+                                                        <% }) %>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-trash-alt" style="margin-bottom:0.8rem !important"
+                                                    id="<%= item.cartId %>_<%= item.productId %>"></i>
+                                                <% item.customizations.forEach(function(cust){ %>
+                                                    <div class="mb-2">
+                                                        <i class="fa fa-trash-alt"
+                                                            id="<%= cust.cartId %>_<%= cust.productId %>"></i>
+                                                    </div>
+                                                    <% }) %>
+                                            </td>
+                                        </tr>
+
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="float-right total-price mt-3" <%=isEmpty %>>
+                            <span id="totalPrice">Total Price: $ <%= totalPrice%></span>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="displayInfoModal" tabindex="-1" role="dialog" aria-labelledby="displayInfoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="displayInfoModalLabel">Information</h5>
+                    <button type="button" class="close modal-close-icon" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary go-back-button" data-dismiss="modal">Go Back</button>
+                    <button type="button" class="btn btn-primary home-button">Go To Home</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteLabel">Confirm</h5>
+                    <button type="button" class="close delete-modal-close-icon" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="line-height: 1;">
+                    Are you sure you want to delete?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary confirm-delete-button">Confirm</button>
+                    <button type="button" class="btn btn-primary cancel-delete-button">Cancel</button>
+                </div>
+                <input type="hidden" id="deleteId">
+            </div>
+        </div>
+    </div>
+
+    <%- include ('partials/footer') %>
+        <script>
+            $(document).ready(function () {
+
+                var validationInfo = [];
+                $(".fa-plus").on('click', function () {
+                    event.preventDefault();
+                    var sel = window.getSelection();
+                    sel.removeAllRanges();
+                    var curVal = $(this).parent().children()[1].value || 0;
+                    var updatedVal = parseInt(curVal) + 1;
+                    $(this).parent().children()[1].value = updatedVal;
+                    var cartId = $(this).attr("id");
+                    $.ajax({
+                        method: 'PUT',
+                        url: '/cart/update',
+                        data: { cartId, updatedVal },
+                        success: function (data) {
+                            $("#totalPrice").html("Total Price: $ " + data);
+                            validateCart(false);
+                        },
+                        error: function (err) {
+                            alert("Failed to increment quantity");
+                            console.log("Failed to increment quantity", err);
+                        }
+                    });
+                })
+                $(".fa-minus").on('click', function () {
+                    event.preventDefault();
+                    var sel = window.getSelection();
+                    sel.removeAllRanges();
+                    var curVal = $(this).parent().children()[1].value || 0;
+                    var updatedVal = parseInt(curVal) - 1;
+                    if (updatedVal < 1) {
+                        updatedVal = 1;
+                    }
+                    $(this).parent().children()[1].value = updatedVal;
+                    var cartId = $(this).attr("id");
+                    $.ajax({
+                        method: 'PUT',
+                        url: '/cart/update',
+                        data: { cartId, updatedVal },
+                        success: function (data) {
+                            $("#totalPrice").html("Total Price: $ " + data);
+                            validateCart(false);
+                        },
+                        error: function (err) {
+                            alert("Failed to decrement quantity");
+                            console.log("Failed to decrement quantity", err);
+                        }
+                    });
+                });
+
+                $("#orderButton").on('click', function () {
+                    event.preventDefault();
+                    validateCart(true);
+                });
+
+                $(".confirm-delete-button").on('click', function () {
+                    $("#confirmDelete").modal('hide');
+                    var cartId = $("#deleteId").val();
+                    $.ajax({
+                        method: 'DELETE',
+                        url: '/cart/delete',
+                        data: { cartId },
+                        success: function (data) {
+                            location.reload();
+                        },
+
+                        error: function (err) {
+                            alert("Failed to delete product");
+                            console.log("Failed to delete product", err);
+                        }
+
+                    });
+                });
+
+                $(".cancel-delete-button, .delete-modal-close-icon").on('click', function () {
+                    $("#confirmDelete").modal('hide');
+                });
+
+                $(".fa-trash-alt").click(function () {
+
+                    var ids = $(this).attr("id");
+                    var splitIds = ids.split("_");
+                    var cartId = splitIds[0];
+
+                    $("#deleteId").val(cartId);
+                    $("#confirmDelete").modal('show');
+
+
+                });
+
+                $(".home-button").on('click', function () {
+                    $("#displayInfoModal").modal('hide');
+                    window.open('/home', "_self");
+                });
+
+                $(".modal-close-icon").on('click', function () {
+                    $("#displayInfoModal").modal('hide');
+                    location.reload();
+                });
+
+                $(".go-back-button").on('click', function () {
+                    $("#displayInfoModal").modal('hide');
+                    history.go(-1);
+                });
+
+                $(".container-fluid").css("height", $(window).height() - 120);
+                $(window).bind("resize", function () {
+                    $(".container-fluid").css("height", $(window).height() - 120);
+                });
+                $("#cartTable").css("height", $(window).height() - 252);
+                $(window).bind("resize", function () {
+                    $("#cartTable").css("height", $(window).height() - 252);
+                });
+
+
+                function validateCart(triggerOrder) {
+                    $.ajax({
+                        method: 'POST',
+                        url: '/validatecart',
+                        data: {},
+                        success: function (data) {
+                            console.log(data);
+                            validationInfo = data;
+                            var isDisabled = data.find(d => d.hasError);
+                            data.forEach(d => {
+                                if (d.hasError) {
+                                    var msg = `Requested quantity is greater than Stock Quantity (${d.stockQuantity})`;
+                                    if ($("#prodName_" + d.cartId).find(".fa-exclamation-triangle").length === 0)
+                                        $("#prodName_" + d.cartId).append("<i style='color:red !important' title='" + msg + "'class='fas fa-exclamation-triangle'></i>");
+                                }
+                                else {
+                                    $("#prodName_" + d.cartId).find(".fa-exclamation-triangle").remove();
+                                }
+                            });
+                            if (isDisabled) {
+                                $("#orderButton").attr('disabled', true);
+                            }
+                            else {
+                                $("#orderButton").attr('disabled', false);
+                                if (triggerOrder) {
+                                    $.ajax({
+                                        method: 'POST',
+                                        url: '/order',
+                                        data: {},
+                                        success: function (data) {
+                                            $(".modal-body").html(data);
+                                            $("#displayInfoModal").modal('show');
+
+                                        },
+
+                                        error: function (err) {
+                                            alert("Failed to complete the order");
+                                            console.log("Failed to complete the order", err);
+                                        }
+
+                                    });
+
+                                }
+                            }
+
+
+                        },
+                        error: function (err) {
+                            alert("Failed to validate the order");
+                            console.log("Failed to validate the order", err);
+                        }
+                    });
+                }
+
+            })
+
+        </script>

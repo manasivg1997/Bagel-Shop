@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Bagel Station</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+		integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+		integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="/stylesheets/style.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+
+<body>
+	<div class="">
+		<div class="app-header">
+			<a href="/home">Bagel Station </a>
+			<div class="lead" title="One stop shop for Bagels">- One stop shop for Bagels</div>
+			<div class="header-profile">
+
+				<a style="font-size:xx-large" id="userprof"><i class="far fa-user-circle"></i></a>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script>
+		$(document).ready(function () {
+			if (location.pathname === "/login" || location.pathname === "/register") {
+				$(".header-profile").hide();
+			}
+			else {
+				$.ajax({
+					method: 'GET',
+					url: '/user',
+					data: {},
+					success: function (data) {
+						$('body').popover({
+							selector: '.fa-user-circle',
+							placement: 'bottom',
+							trigger: 'click',
+							title: '1',
+							template: `<div>
+								<div class='usp'>
+									<div class='prof-details'><i class="usp-a fas fa-user-tag mr-2"></i>${data.firstname} ${data.lastname}</div>
+									<div class='prof-details'><i class="usp-a fas fa-phone mr-2"></i>${data.phonenumber}</div>
+									<div class='prof-details bb-1 pb-2 mb-2'><i class="usp-a fas fa-envelope mr-2"></i>${data.emailid}</div>
+									<div class="ml-2"><a class='usp-a' href='/cart'><i class='fas fa-shopping-cart mr-2'></i>Cart</a></div>
+									<div class="ml-2"><a class='usp-a' href='/order/history'><i class='fas fa-history mr-2'></i> Order History</a></div>
+									<div class="ml-2"><a class='usp-a' href='/logout'><i class='fas fa-sign-out-alt mr-2'></i>Logout</a></div>
+								</div>
+							</div>`
+
+						});
+						$("#userprof").on("click", function () {
+							$("[id^=popover]").css({
+								left: '-15px'
+							});
+							$(this).popover('show');
+						});
+
+					},
+
+					error: function (err) {
+						alert("Failed to complete the order");
+						console.log("Failed to complete the order", err);
+					}
+
+				});
+
+
+			}
+		});
+	</script>

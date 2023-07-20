@@ -1,0 +1,136 @@
+<%- include ('partials/header') %>
+	<div class="container-fluid">
+
+		<div class="row" style="height: 100%;">
+			<%- include ('partials/leftmenu') %>
+			<div class="col-md-1"></div>
+			
+			<div class="col-md-6">
+				<nav id="navSec" style="margin-left: -19%;" <%= product.category===""? "hidden" : "" %> aria-label="breadcrumb">
+					<ol class="breadcrumb mb-0">
+						<li class="breadcrumb-item"><a href="/home">Home</a></li>
+						<li class="breadcrumb-item"><a href="/<%=product.category%>s">
+								<%= product.category==="bagel" ? "Bagels" : "Beverages" %>
+							</a></li>
+						<li class="breadcrumb-item active" aria-current="page">
+							<%= product.name %>
+						</li>
+					</ol>
+				</nav>
+				<div id="updateContainer" style="overflow-y: auto;">
+					<h3 class="mt-3">
+						<%=product && product.name ? "Update Item" : "Create New Item" %>
+					</h3>
+
+					<%var action=product && product.name ? "/item/update/" : "/item/create" %>
+						<span style="display: none;" id="status">
+							<%=product.status%>
+						</span>
+
+						<form action="<%=action%>" method="POST" enctype="multipart/form-data">
+							<input type="hidden" name="id" value="<%=product.id%>" class="form-control">
+							<input type="hidden" name="uploadedImage" value="<%=product.image%>" class="form-control">
+							<div class="form-group mt-4">
+								<input type="text" name="name" value="<%=product.name%>" class="form-control"
+									placeholder="Enter the name of the Item" required>
+							</div>
+							<div class="form-group">
+
+								<select id="categorySelect" name="category" style="height: 35px;width:100%;">
+
+									<option value="">Select a category</option>
+									<% var options=[ "Bagel" , "Beverage" , "Spread" , "Side Tub" , "Syrup" ]; var
+										values=[ "bagel" , "beverage" , "spread" , "sidetub" , "syrup" ]; for ( var i=0;
+										i < options.length; i++ ) { var selected=( product &&
+										product.category==values[i] ) ? "selected" : "" ; %>
+										<option value="<%=values[i] %>" <%=selected %>> <%=options[i] %>
+										</option>
+										<% } %>
+								</select>
+							</div>
+							<div class="form-group">
+								<input type="number" name="price" value="<%=product.price%>" class="form-control"
+									placeholder="Enter the Price of the Item" required>
+							</div>
+							<div class="form-group">
+								<input type="number" name="quantity" value="<%=product.quantity%>" class="form-control"
+									placeholder="Enter the quantity of the Item" required>
+							</div>
+							<div class="form-group">
+								<textarea name="description" class="form-control"
+									placeholder="Enter the description of the Item"
+									required><%=product.description%></textarea>
+							</div>
+							<%var isRequired=product && product.image ? "" : "required" %>
+								<div class="form-group" style="display: inline-flex;background-color: floralwhite;">
+									<div style="margin-top: 10px;margin-left:15px" class="product-desc">
+										<%=product.image%>
+									</div>
+									<input type="file" style="height: auto;" name="image" accept="image/png, image/jpeg"
+										class="form-control" placeholder="Enter the image of the Item" <%=isRequired%>>
+								</div>
+								<div class="form-group mt-4">
+									<button class="btn btn-secondary cancel-button">Cancel</button>
+									<button type="submit" class="btn btn-info">
+										<%=product && product.name ? "Update" : "Create" %>
+									</button>
+								</div>
+						</form>
+				</div>
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+	</div>
+	<div class="modal fade" id="displayInfoModal" tabindex="-1" role="dialog" aria-labelledby="displayInfoModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="displayInfoModalLabel">Information</h5>
+					<button type="button" class="close modal-close-icon" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">X</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					...
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary ok-button">Ok</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function () {
+			$(".cancel-button").on('click', function () {
+				history.go(-1);
+			});
+
+			var status = $("#status").html().trim();
+			if (status === "success") {
+				$(".modal-body").html("Item Updated Successfully!");
+				$("#displayInfoModal").modal('show');
+			}
+
+			$(".ok-button").on('click', function () {
+				var cat = $("#categorySelect").val();
+				var route = cat === "bagel" ? "bagels" : cat === "beverage" ? "beverages" : "all";
+				$("#displayInfoModal").modal('hide');
+
+				window.open('/' + route, "_self");
+			});
+
+			$(".modal-close-icon").on('click', function () {
+				$("#displayInfoModal").modal('hide');
+			});
+
+			$("#updateContainer").css("height", $(window).height() - ($("#navSec").prop("hidden") ? 135 : 200));
+			$(window).bind("resize", function () {
+				$("#updateContainer").css("height", $(window).height() - ($("#navSec").prop("hidden") ? 135 : 200));
+			});
+			
+
+		});
+	</script>
+
+	<%- include ('partials/footer') %>

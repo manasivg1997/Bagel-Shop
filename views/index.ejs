@@ -1,0 +1,320 @@
+<%- include ('partials/header') %>
+
+
+  <div class="container-fluid">
+    <div class="row" style="height: 100%;">
+      <div class="col-md-3 col-sm-3">
+        <div class="d-flex flex-column flex-shrink-0 p-3" style="border-right: 2px solid aliceblue;height: 100%;">
+          <ul class="nav nav-pills flex-column mb-auto">
+
+            <li>
+              <a href="/home" class="nav-link" aria-current="page">
+                <i class="far fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <% var isAllActive=(category=="Menu" )? "active" : "" ; %>
+                <a href="/menu" class="nav-link <%=isAllActive%>" aria-current="page">
+                  <i class="far fa-list"></i>
+                  Menu
+                </a>
+            </li>
+
+            <span>
+              <% var isBagelsActive=(category=="Bagels" )? "active" : "" ; %>
+            </span>
+            <li class="nav-item" style="margin-left: 20px;">
+              <a href="/bagels" class="nav-link <%=isBagelsActive%>" aria-current="page">
+                <i class="far fa-dot-circle"></i>
+                Bagels
+              </a>
+            </li>
+
+            <span>
+              <% var isBeveragesActive=category==="Beverages" ? "active" : "" %>
+            </span>
+            <li class="nav-item" style="margin-left: 20px;">
+              <a href="/beverages" class="nav-link <%= isBeveragesActive %>" aria-current="page">
+                <i class="fas fa-mug-hot"></i>
+                Beverages
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9 col-sm-9 data-container" style="overflow-y: auto;">
+        <div style="margin: 1rem 0.5rem 0.5rem;cursor: pointer;">
+
+          <form action="/menu/search" method="POST">
+            <div class="row" style="height: 30px;" <%=category==='' ? 'hidden' : '' %>>
+              <div class="col-md-4"></div>
+              <div class="form-group col-md-3 pl-0 pr-0">
+                <input type="text" style="height: 35px;width: 100%;border: 1px solid chocolate;border-radius: 3px;"
+                  name="productName" id="productSearchName" class="form-control" placeholder="Search by Product Name"
+                  value="<%= productName %>">
+              </div>
+              <div class="form-group col-md-3 pr-0 pl-0">
+                <select name="categoryFilter" id="categoryFilter" style="height: 35px;width:100%;">
+
+                  <option value="">Select a category</option>
+                  <% for ( var i=0; i < filterOptions.length; i++ ) { var selected=( categoryFilter==filterValues[i] )
+                    ? "selected" : "" ; %>
+                    <option value="<%=filterValues[i] %>" <%=selected %>> <%=filterOptions[i] %>
+                    </option>
+                    <% } %>
+                </select>
+              </div>
+              <div class="form-group col-md-2 pl-0">
+                <button type="submit" class="btn btn-info" style="height: 35px;">Search</button>
+              </div>
+              <input type="hidden" value="<%=category%>" name="activeSideMenu">
+          </form>
+        </div>
+
+      </div>
+      <% var hasResults=results.length ? '' : 'hidden' %>
+        <div class="row ml-2">
+          <div class="col-md-5 add-product mt-4" style="height: 30px;">
+            <a <%=(category==='' || userProfile && userProfile.role==='user' ) ? 'hidden' :''%>
+              href="/item/create">Add Item<i class="fas fa-plus-circle ml-1"></i></a>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-6">
+            <form id="paginate" method="POST" action="/menu">
+              <nav style="margin-top: 1rem; margin-bottom: -1rem;" aria-label="Products Navigation" <%=hasResults%>>
+                <ul class="pagination justify-content-end" style="margin-right: 6rem;">
+                  <li class="page-item">
+                    <a class="page-link" id="prev" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <span id="pageNumber"></span>
+                  <li class="page-item">
+                    <a class="page-link" id="next" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                  <span id="totalCount" class="mt-2 ml-2 product-desc"></span>
+                </ul>
+              </nav>
+              <input type="hidden" name="category" value="<%=paginateCategory%>" id="paginateCategory">
+              <input type="hidden" name="currentPage" value="<%=currentPage%>" id="currentPage">
+              <input type="hidden" name="skip" value="<%=skip%>" id="skip">
+              <input type="hidden" name="asm" value="<%=category%>" id="asm">
+
+            </form>
+          </div>
+        </div>
+        <div class="mr-3">
+
+
+
+          <div class="row ml-3 mt-2" <%=hasResults%>>
+
+            <% results.forEach(function(prod){ %>
+
+              <div class="card mr-3 ml-2 mt-4" style="height: 15rem;">
+                <img class="card-img-top" src="/images/<%= prod.image %>" alt="<%= prod.name %>"
+                  style="width:200px; height:200px;">
+                <div class="card-body">
+                  <a class="font-weight-bold" href="/productdetails/<%=prod._id%>">
+                    <div title="<%= prod.name %>"
+                      style="text-overflow: ellipsis;width: 145px;white-space: nowrap;overflow: hidden;display: inline-block;">
+                      <%= prod.name %>
+                    </div>
+                  </a>
+                  <!-- ******************Section to be hidden/shown based on User role******************* -->
+                  <% var catg=category==="Bagels" ? "Bagel" : category==="Beverages" ? "Beverage" : "" %>
+                    <a <%=userProfile && userProfile.role==='user' ? 'hidden' :''%> href="/item/update/<%=prod._id%>
+                        "><i class="fas fa-edit mr-1" style="vertical-align: super" title="Edit <%=catg%>"></i></a>
+                    <a <%=userProfile && userProfile.role==='user' ? 'hidden' :''%>><i class="fas fa-trash-alt"
+                        id="<%=prod._id%>" style="vertical-align: super" title="Delete <%=catg%>"></i></a>
+                    <!-- *********************************************************************************** -->
+                </div>
+              </div>
+
+
+              <% }); %>
+
+          </div>
+          <% var noResults=(category==='' || results.length) ? 'hidden' : '' %>
+            <div class="row ml-3 mt-2 product-price" <%=noResults%>>
+              No Results Found
+            </div>
+            <% var isNotHome=category==="" ? "" : "hidden" %>
+              <div class="row ml-3 mt-2" <%=isNotHome %>>
+                <%- include ('partials/home') %>
+                  <div id="footerSection" style="display: none;">
+                    <%- include ('partials/footersection') %>
+                  </div>
+              </div>
+
+        </div>
+    </div>
+  </div>
+  </div>
+  <div class="modal fade" id="displayInfoModal" tabindex="-1" role="dialog" aria-labelledby="displayInfoModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="displayInfoModalLabel">Information</h5>
+          <button type="button" class="close modal-close-icon" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">X</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary ok-button">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteLabel">Confirm</h5>
+          <button type="button" class="close delete-modal-close-icon" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">X</span>
+          </button>
+        </div>
+        <div class="modal-body" style="line-height: 1;">
+          Are you sure you want to delete?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary confirm-delete-button">Confirm</button>
+          <button type="button" class="btn btn-primary cancel-delete-button">Cancel</button>
+        </div>
+        <input type="hidden" id="deleteId">
+      </div>
+    </div>
+  </div>
+
+
+  <%- include ('partials/footer') %>
+    <script>
+      $(document).ready(function () {
+        $("#footerSection").hide();
+        var totalCount = 0;
+        var currentPage = parseInt($("#currentPage").val());
+        var skip = parseInt($("#skip").val());
+
+
+        if (window.location.pathname === "/home") {
+          $('.nav-link').first().addClass('active');
+          $(".data-container").css("height", $(window).height() - 119);
+          $(window).bind("resize", function () {
+            $(".data-container").css("height", $(window).height() - 119);
+          });
+          $("#footerSection").show();
+        }
+        else {
+          $("#footerSection").hide();
+          $(".data-container").css("height", $(window).height() - 120);
+          $(window).bind("resize", function () {
+            $(".data-container").css("height", $(window).height() - 120);
+          });
+        }
+
+        $('.nav-link').on('click', function () {
+          $('.nav-link').removeClass('active');
+          $(this).addClass('active')
+        });
+
+        $(".ok-button, .modal-close-icon").on('click', function () {
+          $("#displayInfoModal").modal('hide');
+          location.reload();
+        });
+
+        $(".confirm-delete-button").on('click', function () {
+          $("#confirmDelete").modal('hide');
+          var id = $("#deleteId").val();
+          $.ajax({
+            method: 'DELETE',
+            url: '/item/delete',
+            data: { id },
+            success: function (data) {
+              $(".modal-body").html(data);
+              $("#displayInfoModal").modal('show');
+            },
+
+            error: function (err) {
+              alert("Failed to delete Item");
+              console.log("Failed to delete Item", err);
+            }
+
+          });
+        });
+
+        $(".cancel-delete-button, .delete-modal-close-icon").on('click', function () {
+          $("#confirmDelete").modal('hide');
+        });
+
+        $(".fa-trash-alt").click(function () {
+          var id = $(this).attr("id");
+          $("#deleteId").val(id);
+          $("#confirmDelete").modal('show');
+        });
+
+        category = $("#categoryFilter").val();
+        var productSearchName = $("#productSearchName").val();
+        $.ajax({
+          method: 'GET',
+          url: '/products/count',
+          data: { category: category, productName: productSearchName },
+          success: function (data) {
+            totalCount = data.count;
+            $("#pageNumber").html(`<li class="page-item"><a class="page-link" href="#">${currentPage}</a></li>`)
+            $("#totalCount").html(`${data.count < (skip + 8) ? data.count : (skip + 8)} of ${data.count} records`)
+          },
+
+          error: function (err) {
+            alert("Failed to delete Item");
+            console.log("Failed to delete Item", err);
+          }
+
+        });
+
+        $("#next").on('click', function (event) {
+          event.preventDefault();
+
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          currentPage = parseInt($("#currentPage").val());
+          skip = parseInt($("#skip").val());
+
+          if (currentPage < Math.ceil(totalCount / 8)) {
+            skip += 8;
+            $("#currentPage").val(currentPage + 1);
+            $("#skip").val(skip);
+            console.log(category);
+            $("#paginate").submit();
+          }
+        });
+
+        $("#prev").on('click', function (event) {
+          event.preventDefault();
+
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          currentPage = parseInt($("#currentPage").val());
+          skip = parseInt($("#skip").val());
+          if (currentPage > 1) {
+            skip -= 8;
+            $("#currentPage").val(currentPage - 1);
+            $("#skip").val(skip);
+            $("#paginate").submit();
+          }
+        });
+
+      });
+    </script>

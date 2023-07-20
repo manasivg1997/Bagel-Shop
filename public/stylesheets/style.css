@@ -1,0 +1,481 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #ffc10766 !important;
+  overflow: hidden;
+}
+
+.app-header {
+  background: floralwhite;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 40px;
+  font-style: italic;
+  font-family: fantasy;
+  color: #d2691e !important;
+}
+
+.app-footer {
+  background: floralwhite;
+  text-align: center;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 600;
+  font-family: cursive;
+  color: #d2691e !important;
+  position: fixed;
+  bottom: 0;
+  height: 3rem;
+  width: 100%;
+}
+
+.app-footer-section {
+  background: #d2691e;
+  font-family: cursive;
+  color: floralwhite !important;
+  margin-top: 20px;
+  padding-top: 10px;
+  width: 100%;
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
+
+.app-footer-section i {
+  color: floralwhite !important;
+}
+
+.app-footer-section .separator {
+  margin-left: -3rem;
+  border-right: 2px solid floralwhite;
+  margin-right: 3rem;
+}
+
+#addToCart {
+  display: block;
+  cursor: pointer;
+  height: 35px;
+  width: 35%;
+  background: chocolate !important;
+  color: floralwhite !important;
+  margin-left: 34%;
+  padding-top: 4px;
+}
+
+#addToCart > i {
+  color: floralwhite !important;
+}
+
+table {
+  border: 1px solid floralwhite !important;
+}
+
+tr {
+  border-bottom: 2px solid floralwhite;
+}
+
+.card-body {
+  text-align: center;
+  margin-top: 6px;
+  padding: 0 !important;
+}
+
+.add-product {
+  color: #d2691e !important;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.add-product > a {
+  cursor: pointer;
+}
+
+.header-profile {
+  font-size: 16px;
+  float: right;
+  padding-top: 8px;
+  padding-right: 30px;
+}
+
+.main-content {
+  color: #d2691e !important;
+  font-size: 20px;
+  font-family: cursive;
+  text-align: justify;
+}
+
+input,
+textarea,
+select {
+  color: #d2691e !important;
+  font-size: 18px !important;
+  font-family: cursive !important;
+  font-weight: 500 !important;
+}
+
+::placeholder {
+  color: #d2691e !important;
+}
+
+label {
+  color: #d2691e !important;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.floral-white {
+  background-color: floralwhite !important;
+}
+
+.lead {
+  font-style: italic;
+  font-weight: 500 !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 35%;
+  display: inline-block;
+}
+
+.total-price {
+  color: #d2691e !important;
+  font-family: cursive;
+  font-size: 18px;
+  font-weight: 600;
+  border: 2px solid;
+  padding: 5px;
+}
+
+.customization-overflow {
+  overflow-y: auto;
+  height: 192px;
+}
+
+a,
+.page-title,
+h3,
+i,
+td,
+input#qtyCtrl {
+  color: #d2691e !important;
+  text-decoration: none !important;
+}
+
+i,
+a {
+  cursor: pointer !important;
+}
+
+.btn-primary,
+.btn-info,
+thead {
+  background: #d2691e !important;
+  color: white;
+}
+
+.btn-secondary {
+  background: floralwhite !important;
+  color: #d2691e !important;
+  border: 1px solid #d2691e !important;
+}
+
+td {
+  font-family: cursive;
+  font-weight: 500;
+}
+
+.breadcrumb {
+  background-color: #ffe69b !important;
+}
+
+.modal-footer {
+  border-top: none !important;
+  background-color: floralwhite !important;
+}
+
+.product-title {
+  color: #d2691e !important;
+  font-family: cursive;
+  font-size: xx-large;
+  font-weight: 600;
+}
+
+.product-desc {
+  color: #d2691e !important;
+  font-family: cursive;
+  font-size: large;
+}
+
+.product-price {
+  color: #d2691e !important;
+  font-family: cursive;
+  font-size: x-large;
+}
+
+#flexCheckDefault {
+  margin-top: 1rem;
+  height: 15px;
+  width: 15px;
+  margin-right: 0.5rem;
+}
+
+.spread-title {
+  color: #d2691e !important;
+  font-family: cursive;
+  font-size: large;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 62%;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.spread-price {
+  color: #d2691e !important;
+  font-family: cursive;
+  font-size: large;
+  margin-right: 0.75rem;
+  vertical-align: middle;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+li.list-group-item:first-child {
+  padding-top: 10px !important;
+  padding-bottom: 5px !important;
+}
+li.list-group-item {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+li.list-group-item:last-child {
+  padding-top: 5px !important;
+  padding-bottom: 10px !important;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+
+a.active,
+a.active i {
+  color: #fff !important;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link,
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background: #d2691e !important;
+}
+
+.bagel {
+  background-image: url(../images/bagel.png);
+  height: 25px;
+  width: 25px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-flex;
+  vertical-align: middle;
+  background-color: aliceblue !important;
+}
+
+.fas {
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.margin-rl-20 {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  padding-right: 0.75rem !important;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+  vertical-align: text-top;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border: 1px solid #d2691e;
+  border-radius: 25%;
+}
+
+.container:hover input ~ .checkmark,
+.container input:checked ~ .checkmark {
+  background-color: #d2691e;
+  border: 1px solid #9e4200;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 6px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #d2691e;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #d2691e;
+}
+
+.btn-primary.disabled,
+.btn-primary:disabled {
+  cursor: no-drop !important;
+}
+
+.modal-header {
+  background: #d2691e;
+  font-size: 18px;
+  font-family: cursive;
+  color: white;
+}
+
+.modal-body {
+  color: #d2691e;
+  background: floralwhite;
+  white-space: pre-line;
+  font-size: 18px;
+  font-family: cursive;
+  font-weight: 600;
+  line-height: 35px;
+}
+
+.modal-close-icon, .delete-modal-close-icon {
+  font-size: 22px !important;
+  color: white !important;
+}
+
+#qtyCtrl {
+  pointer-events: none !important;
+}
+
+.err-msg {
+  color: red;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: cursive;
+}
+
+.usp {
+  background-color: #d2691e;
+  padding: 1rem;
+  color: floralwhite !important;
+  line-height: 35px;
+  width: 13rem;
+}
+
+.prof-details {
+  font-weight: 600;
+  font-size: medium;
+  width: 10rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-left: 10px;
+  cursor: default !important;
+}
+
+.prof-details > i {
+  cursor: default !important;
+}
+
+.bb-1 {
+  border-bottom: 1px solid floralwhite;
+}
+
+.usp-a,
+.usp-a > i {
+  background-color: #d2691e !important;
+  color: floralwhite !important;
+}
+
+.address-error {
+  color: red;
+  font-family: cursive;
+  font-size: 18px;
+  margin-left: 20px;
+}
+
+.password-error {
+  color: red;
+  font-family: cursive;
+  font-size: 18px;
+
+}
+
+.pagination-div {
+  font-size: xx-large;
+  text-align: right;
+  margin-right: 6rem;
+  margin-bottom: -2rem;
+}
+
+select {
+  border: 1px solid chocolate !important;
+  border-radius: 3px !important;
+  outline: chocolate;
+}

@@ -1,0 +1,219 @@
+<%- include ('partials/header') %>
+  <div class="container-fluid">
+    <div class="product-title text-center mt-2 mb-2">Register Page</div>
+    <div class="err-msg mb-2 mt-2 text-center" id="errMsg" <%=error ? "" : "hidden" %>><%=error%> <span class="ml-3"
+          id="closeErrMsg">X</span></div>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-5" style="overflow-y: auto; height: 30rem;">
+        <form role="form" id="registerForm" action="/register" method="post" style="max-width: 80%">
+          <div class="form-group">
+            <input type="text" autofocus name="firstname" value="<%=firstname%>" placeholder="Enter Firstname"
+              class="form-control" required>
+          </div>
+          <div class="form-group">
+            <input type="text" name="lastname" value="<%=lastname%>" placeholder="Enter Lastname" class="form-control"
+              required>
+          </div>
+          <div class="form-group">
+            <input type="text" name="username" value="<%=username%>" placeholder="Enter Username" class="form-control"
+              required>
+          </div>
+          <div class="form-group">
+            <input type="password" name="password" id="password" value="<%=password%>" placeholder="Password" class="form-control"
+              required>
+              <span class="password-error">Please enter strong password</span>
+          </div>
+          <div class="form-group">
+            <label for="dob">Date Of birth:</label>
+            <input type="date" id="dob" name="dateofbirth" value="<%=dateofbirth%>" class="form-control" required>
+          </div>
+          <label class="mr-2">Gender:</label>
+          <div class="row">
+
+            <div class="form-group ml-3 mr-2">
+              <input type="radio" id="male" name="gender" value="Male" <%=gender==="Male" || gender==="" ? "checked"
+                : "" %>>
+              <label class="control-label" for="male">Male</label>
+            </div>
+            <div class="form-group mr-2">
+              <input type="radio" id="female" name="gender" value="Female" required <%=gender==="Female" ? "checked"
+                : "" %>>
+              <label class="control-label" for="female">Female</label>
+            </div>
+            <div class="form-group mr-2">
+              <input type="radio" id="other" name="gender" value="Other" <%=gender==="Other" ? "checked" : "" %>>
+              <label class="control-label" for="other">Other</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" name="emailid" value="<%=emailid%>" placeholder="Enter email address"
+              class="form-control" required>
+          </div>
+          <div class="form-group">
+            <input type="tel" id="phone" name="phonenumber" value="<%=phonenumber%>"
+              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" placeholder="Enter phone number xxx-xxx-xxxx" required>
+          </div>
+          <div>
+            <button type="button" id="addAddress" class="btn btn-primary ok-button">Add Address</button>
+            <span class="address-error">Please add an address</span>
+          </div>
+
+          <div id="addressContainer" class="mb-3"
+            style="height: 200px; border: 1.5px solid chocolate;margin-top: 10px; overflow-y: auto; max-height: 20rem;">
+
+            <% if(addresses) { addresses.forEach(function(add){%>
+              <div
+                style="margin:1rem; border:2px solid floralwhite; padding-left: 0.5rem; padding-top:0.3rem; padding-bottom:0.3rem;">
+                <div class="form-group d-inline-flex">
+                  <label style="margin-right: 4.9rem;"> Type</label>
+                  <input type="text" name="address[address1][addresstype]" value="<%=add.addresstype%>"
+                    class="form-control" style="width: 15.5rem;pointer-events: none !important;">
+                </div>
+                <div class="form-group d-inline-flex">
+                  <label style="margin-right:3.2rem;"> Location</label>
+                  <input type="text" name="address[address1][location]" value="<%=add.location%>" class="form-control"
+                    style="width: 15.5rem;pointer-events: none !important;">
+                </div>
+                <div class="form-group d-inline-flex">
+                  <label style="margin-right: 1rem; width: 6rem;"> Zip Code</label>
+                  <input type="text" name="address[address1][zipcode]" value="<%=add.zipcode%>" class="form-control"
+                    style="width: 15.6rem;pointer-events: none !important;">
+                </div>
+              </div>
+
+              <%})}%>
+
+          </div>
+          <button type="button" id="submitBtn" class="btn btn-primary ">Submit</button>
+          <input type="submit" class="submit" style="display:none;">
+          <a href="/home"><button type="button" class="btn btn-primary">Cancel</button></a>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-md-3"></div>
+
+  </div>
+  <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="displayInfoModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="displayInfoModalLabel">Add Address</h5>
+          <button type="button" class="close modal-close-icon" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">X</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid" style="height: 4rem;">
+            <div class="row" style="margin-top: -75px ;">
+              <label class="ml-3 mr-4">Type:</label>
+              <div class="form-group" style="display: inline-flex;
+          align-items: baseline;">
+                <input type="radio" class="mr-2" id="home" name="addressRadio" value="home" required checked>
+                <label class="control-label" for="home">Home</label>
+              </div>
+              <div class="form-group ml-3" style="display: inline-flex;
+          align-items: baseline;">
+                <input type="radio" class="mr-2" id="work" name="addressRadio" value="work">
+                <label class="control-label" for="work">Work</label>
+              </div>
+            </div>
+            <input type="text" style="margin-top: -50px ;" autofocus name="location" placeholder="Enter Location"
+              id="location" class="form-control" required>
+            <input type="number" style="margin-top: -10px ;" placeholder="Enter Zip code" id="zipcode"
+              class="form-control" required />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="addButton" class="btn btn-primary ok-button">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include ('partials/footer') %>
+  <script>
+    $(document).ready(function () {
+      $(".address-error").hide();
+      $(".password-error").hide();
+      $("#addAddress").on('click', function () {
+        $("#location").val("");
+        $("#zipcode").val("");
+        $(".address-error").hide();
+        $("#addButton").prop('disabled', true);
+        $("#addAddressModal").modal('show');
+      });
+
+      $("#submitBtn").on('click', function () {
+        if (!$("#addressContainer").children().length) {
+          $(".address-error").show();
+          return false;
+        }
+
+        var passexp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%   \^&\*])(?=.{6,})/;
+        if(!passexp.test($("#password").val())){
+          
+           $(".password-error").show();
+           return false;
+        }
+        $(".password-error").hide();
+        $(".address-error").hide();
+        $(".submit").click();
+      });
+
+      $("#location").on('keyup', function(){
+        if($("#location").val() && $("#zipcode").val()){
+          $("#addButton").prop('disabled', false);
+        }
+        else {
+          $("#addButton").prop('disabled', true);
+        }
+      });
+
+      $("#zipcode").on('keyup', function(){
+        if($("#location").val() && $("#zipcode").val()){
+          $("#addButton").prop('disabled', false);
+        }
+        else {
+          $("#addButton").prop('disabled', true);
+        }
+
+        
+      });
+
+      $("#addButton").on('click', function () {
+        var type = $("input[name='addressRadio']:checked").val();
+        var location = $("#location").val();
+        var zipCode = $("#zipcode").val();
+        $("#addressContainer").append(`
+        <div style="margin:1rem; border:2px solid floralwhite; padding-left: 0.5rem; padding-top:0.3rem; padding-bottom:0.3rem;">
+              <div class="form-group d-inline-flex">
+                <label style="margin-right: 4.9rem;"> Type</label>
+                <input type="text" name="address[address1][addresstype]" value="${type}" class="form-control"
+                  style="width: 15.5rem;pointer-events: none !important;">
+              </div>
+              <div class="form-group d-inline-flex">
+                <label style="margin-right:3.2rem;"> Location</label>
+                <input type="text" name="address[address1][location]" value="${location}" class="form-control"
+                  style="width: 15.5rem;pointer-events: none !important;">
+              </div>
+              <div class="form-group d-inline-flex">
+                <label style="margin-right: 1rem; width: 6rem;"> Zip Code</label>
+                <input type="text" name="address[address1][zipcode]" value="${zipCode}" class="form-control"
+                  style="width: 15.6rem;pointer-events: none !important;">
+              </div>
+            </div>`)
+        $("#addAddressModal").modal('hide');
+      });
+
+      $(".modal-close-icon").on('click', function () {
+        $("#addAddressModal").modal('hide');
+      });
+
+      $("#closeErrMsg").on('click', function () {
+        $(this).parent().hide('hide');
+      });
+
+    });
+  </script>

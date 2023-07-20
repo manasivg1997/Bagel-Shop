@@ -1,0 +1,169 @@
+<%- include ('partials/header') %>
+    <form id="cartForm" action="/addtocart" method="POST">
+        <div class="container-fluid prod-details-page" style="overflow-y: auto;">
+            <div class="row mt-0">
+                <%- include ('partials/leftmenu') %>
+
+                <div class="col-md-4">
+                    <nav aria-label="breadcrumb" style="margin-left: -60px;">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/<%=product.category%>s">
+                                    <%= product.category==="bagel" ? "Bagels" : "Beverages" %>
+                                </a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <%= product.name %>
+                            </li>
+                        </ol>
+                    </nav>
+                    <div class="text-center">
+                        <img src="/images/<%= product.image %>" style="width:250px; height:250px;"
+                            class="img-thumbnail" />
+                        <div class="mt-2">
+                            <span class="product-title">
+                                <%= product.name %>
+                            </span>
+                            <div class="mt-2">
+                                <span class="product-desc font-weight-bold"> Price: $<%=product.price%></span>
+                                <span class="ml-5" title="Quantity">
+                                    <!-- <label class="product-desc">Quantity</label> -->
+                                    <i class="fa fa-minus" id="decrementQty"></i>
+                                    <input type="number" name="quantity_<%=product._id%>" min="1" value="1"
+                                        style="height:25px;width: 45px;padding-left: 15px;" id="qtyCtrl" />
+                                    <i class="fa fa-plus" id="incrementQty"></i>
+                                </span>
+                                
+                            <!-- <button class="btn btn-primary font-weight-bold float-right" type="submit">Add To Cart</button> -->
+                            </div>
+                            <div class="mt-3">
+                                <span title="Add To Cart" id="addToCart"><i class="fas fa-cart-plus"></i><span > Add To Cart</span></span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <span class="product-desc">
+                                <%=product.description%>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-1"></div>
+                <% var isCustomizationAllowed=product.category==="beverage" ? "hidden" : "" %>
+                    <% var isBevCustomizationAllowed=product.category==="bagel" ? "hidden" : "" %>
+                        <div class="col-md-4 mt-3">
+                            <div <%=isCustomizationAllowed %> >
+
+                                <h3>Spreads</h3>
+
+                                <ul class="list-group customization-overflow">
+                                    <% spreads.forEach(function(spread){ %>
+
+                                        <li class="list-group-item floral-white">
+                                            <label class="form-check d-inline container">
+                                                <input class="form-check-input" type="checkbox" name="<%=spread._id%>"
+                                                    id="flexCheckDefault">
+                                                <span class="checkmark"></span>
+
+                                            </label>
+                                            <img src="/images/<%= spread.image %>" style="width:50px; height:50px;"
+                                                class="img-thumbnail" />
+
+                                            <div class="spread-title" title="<%=spread.name%>">
+                                                <%=spread.name%>
+                                            </div>
+                                            <div class="spread-price">$<%=spread.price%>
+                                            </div>
+                                        </li>
+                                        <% }); %>
+                                </ul>
+
+                            </div>
+                            <br>
+                            <div <%=isCustomizationAllowed %>>
+                                <h3>Side Tubs</h3>
+                                <ul class="list-group customization-overflow">
+                                    <% sidetubs.forEach(function(sidetub){ %>
+
+                                        <li class="list-group-item floral-white">
+                                            <label class="form-check d-inline container">
+                                                <input class="form-check-input" type="checkbox" name="<%=sidetub._id%>"
+                                                    id="flexCheckDefault">
+                                                <span class="checkmark"></span>
+
+                                            </label>
+                                            <img src="/images/<%= sidetub.image %>" style="width:50px; height:50px;"
+                                                class="img-thumbnail" />
+
+                                            <div class="spread-title" title="<%=sidetub.name%>">
+                                                <%=sidetub.name%>
+                                            </div>
+                                            <div class="spread-price">$<%=sidetub.price%>
+                                            </div>
+                                        </li>
+                                        <% }); %>
+                                </ul>
+                            </div>
+                            <div <%=isBevCustomizationAllowed %>>
+                                <h3>Syrups</h3>
+                                <ul class="list-group customization-overflow">
+                                    <% syrups.forEach(function(syrup){ %>
+
+                                        <li class="list-group-item floral-white">
+                                            <label class="form-check d-inline container">
+                                                <input class="form-check-input" type="checkbox" name="<%=syrup._id%>"
+                                                    id="flexCheckDefault">
+                                                <span class="checkmark"></span>
+
+                                            </label>
+                                            <img src="/images/<%= syrup.image %>" style="width:50px; height:50px;"
+                                                class="img-thumbnail" />
+
+                                            <div class="spread-title" title="<%=syrup.name%>">
+                                                <%=syrup.name%>
+                                            </div>
+                                            <div class="spread-price">$<%=syrup.price%>
+                                            </div>
+                                        </li>
+                                        <% }); %>
+                                </ul>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </form>
+    
+  <%- include ('partials/footer') %>
+    <script>
+        $(document).ready(function () {
+            $(".prod-details-page").css("height", $(window).height()-113);
+            $(window).bind("resize", function () {
+                $(".prod-details-page").css("height", $(window).height()-113);
+            });
+
+
+            $("#incrementQty").on('click', function () {
+                event.preventDefault();
+                var sel = window.getSelection();
+                sel.removeAllRanges();
+                var curVal = $("#qtyCtrl").val() || 0;
+                var updatedVal = parseInt(curVal) + 1;
+                $("#qtyCtrl").val(updatedVal);
+            })
+            $("#decrementQty").on('click', function () {
+                event.preventDefault();
+                var sel = window.getSelection();
+                sel.removeAllRanges();
+                var curVal = $("#qtyCtrl").val() || 0;
+                var updatedVal = parseInt(curVal) - 1;
+                if (updatedVal < 0) {
+                    updatedVal = 0;
+                }
+                $("#qtyCtrl").val(updatedVal);
+            });
+
+            $("#addToCart").on("click", function(event){
+                event.preventDefault();
+                $("#cartForm").submit();
+            });
+        })
+    </script>

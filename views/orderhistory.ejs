@@ -1,0 +1,102 @@
+<%- include ('partials/header') %>
+
+    <div class="container-fluid">
+        <div class="row" style="height: 100%;">
+            <%- include ('partials/leftmenu') %>
+                <div class="col-md-1"></div>
+
+                <div class="col-md-7 mt-3">
+                    <span class="product-title" style="margin-left:-4%">Order History</span>
+                    <% var hasData=orderHistory.length ? "" :"hidden"%>
+                        <div <%=hasData %> class="mt-2 order-container" style="overflow-y: auto;height: 500px;width:108%; margin-left:-4%">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Order Id</th>
+                                        <th scope="col">Item</th>
+                                        <th scope="col" style="text-align: center;">Quantity</th>
+                                        <th scope="col" style="text-align: center;">Price</th>
+                                        <th scope="col"> Order Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% orderHistory.forEach(function(order, index){ %>
+                                        <tr>
+                                            <% order.products.forEach(function(item, ind){ %>
+                                                <td scope="row">
+                                                    <%= ind===0 ? index + 1: "" %>
+                                                </td>
+                                                <td>
+                                                    <%= ind===0 ? order._id : "" %>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <div class="mb-2">
+                                                            <%=item.productName%>
+                                                        </div>
+                                                        <% item.customizations.forEach(function(cust){ %>
+                                                            <div class="ml-4 mb-2">
+                                                                - <%= cust.productName %>
+                                                            </div>
+                                                            <% }) %>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: center;">
+
+                                                    <div>
+                                                        <div class="mb-2">
+                                                            <%=item.quantity%>
+                                                        </div>
+                                                        <% item.customizations.forEach(function(cust, index){ %>
+                                                            <div class="mb-2">
+                                                                <%= cust.quantity %>
+
+                                                            </div>
+                                                            <% }) %>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: center;">
+
+                                                    <div>
+                                                        <div class="mb-2">
+                                                            $ <%=item.totalPrice%>
+                                                        </div>
+                                                        <% item.customizations.forEach(function(cust){ %>
+                                                            <div class="mb-2">
+                                                                $ <%= cust.totalPrice %>
+                                                            </div>
+                                                            <% }) %>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <div class="mb-2">
+                                                        <%=ind===0 ?"$ "+ order.orderValue : ""%>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <% }) %>
+                                        <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <div class=" product-title text-center" <%=hasData ? "" : "hidden" %>>
+                                                            No Orders Found!
+                                                    </div>
+                        </div>
+                        <div class="col-md-1"></div>
+
+                </div>
+        </div>
+    </div>
+
+    <%- include ('partials/footer') %>
+        <script>
+            $(document).ready(function () {
+                $(".order-container").css("height", $(window).height() - 200);
+                $(window).bind("resize", function () {
+                    $(".order-container").css("height", $(window).height() - 200);
+                });
+            })
+        </script>
