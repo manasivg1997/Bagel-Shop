@@ -5,8 +5,11 @@ bagel. The website allows users to search and order items according to their lik
 The website also has admin access to allow menu and inventory control. The admin can add new items to the menu. Admin can also edit items on the menu. The admin can update name, description, price and change the images for item. or remove items from menu by soft delete functionality. Admin can also update the item inventory.
 
 Implementation:
+
 Frontend: HTML, CSS, JavaScript
+
 Backend: Node.js, Express.js
+
 Database: MongoDB
 
 Screenshots for main functionalities:
