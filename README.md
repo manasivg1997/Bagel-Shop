@@ -61,8 +61,10 @@ Admin page:
 
 Admin add item:
 
-![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/f5eeed51-0897-4103-b05d-aa5c01d18ba7)
+![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/f83f9f34-64c9-4b0a-b845-72a4e5ffc783)
+
 
 Admin update item:
 
-![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/648dd83a-32bb-4510-aa9a-c34ab1d7aedb)
+![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/baa3450d-5ce9-46f2-ac27-a04314135a38)
+
