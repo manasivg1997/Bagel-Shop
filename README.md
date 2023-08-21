@@ -16,39 +16,48 @@ Screenshots for main functionalities:
 
 Register page:
 
-![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/002c35a0-bc47-459b-8b0d-4f8f86f3bd67)
+![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/ebac8e2f-2d3e-44a8-94f7-b9bf11b36546)
+
 
 Homepage:
 
-![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/6d0ea7ee-0c31-4d89-9574-665473fc1dd5)
+![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/b17ea3f5-f87a-4a6f-bd40-e814ef3a917a)
+
 
 Bagel Details:
 
-![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/5211faf6-bde2-4824-907d-da0b174a67cf)
+![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/867675a9-a70a-41da-b4ad-470004b22658)
+
 
 Filter:
 
-![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/33445ceb-c113-4ee1-8332-2da8c24923a8)
+![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/5e8c6783-c48c-43ec-a7e8-7e5c34b15c4d)
+
 
 Search:
 
-![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/a0abd727-7aa7-4d52-bf22-28dc19c2e5a0)
+![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/4a892e41-aadb-470b-8d2a-c840d1547a29)
+
 
 Cart:
 
-![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/586693f8-64b1-4a5d-9130-86b2aa65f870)
+![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/3cd699e9-56ac-41e2-8fd3-945551d4c298)
+
 
 Inventory validation:
 
-![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/1d5e717f-72f7-42a2-8fd7-ab4d12554291)
+![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/53cb7ae4-3922-4585-8a57-8729db241040)
+
 
 Order history:
 
-![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/f1fa6b6e-acb5-423d-be87-a2ea0e5ce7d6)
+![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/7a83d6a2-8245-4fa6-aa36-a1f0641d46e6)
+
 
 Admin page:
 
-![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/aea3c415-2786-43e6-8321-2907147c80b5)
+![image](https://github.com/manasivg1997/Bagel-Shop/assets/24837305/3cab6cba-2e3d-4732-b784-3b99ba09507e)
+
 
 Admin add item:
 
